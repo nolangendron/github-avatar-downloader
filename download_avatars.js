@@ -16,7 +16,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   request(options, function(err, res, body) {
     if (res.statusCode !== 200) {
-      console.log('Must enter a valid repo owner and repo name.')
+      console.log('Must enter a valid repo owner and repo name.');
     } else {
       var contributors = JSON.parse(body);
       cb(err, contributors);
