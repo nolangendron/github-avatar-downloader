@@ -21,24 +21,15 @@ function getRepoContributors(repoOwner, repoName, cb) {
 }
 
 getRepoContributors("jquery", "jquery", function(err, result) {
-  var urlAvatar = '';
-  var filePath = '';
-  for (let i = 0; i < result.length; i++) {
-    urlAvatar = result[i].avatar_url;
-    filePath = result[i].login;
-  }
-  return downloadImageByURL(urlAvatar, filePath);
+  result.forEach(function(element) {
+    downloadImageByURL(element.avatar_url, 'avatars/' + element.login + '.jpg');
+  })
+
 });
 
 function downloadImageByURL(url, filePath) {
-  request.get(url + '/' + filePath)
-    .on('error', function (err) {
-      throw err;
-    })
-    .on('response', function (response) {
-      console.log('Response Status Code: ', response.statusCode);
-    })
-    .pipe(fs.createWriteStream('./images.jpg'))
+  request.get(url)
+    .pipe(fs.createWriteStream(filePath))
 }
 
 
